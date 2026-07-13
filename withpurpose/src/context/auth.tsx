@@ -66,16 +66,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const t = setTimeout(async () => {
       try {
         const token = await user.getIdToken();
-        await fetch("/api/profile", {
+        const res = await fetch("/api/profile", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({
             name: user.displayName || user.email?.split("@")[0] || "Member",
           }),
         });
-      } catch {
-        // Best-effort: the onSnapshot listener above will pick up the doc
-        // once it exists; if this attempt fails, the next mount retries.
+        if (!res.ok) {
+          // fetch() only rejects on a network failure, never on a 4xx/5xx
+          // response, so a server-side crash here (e.g. a missing/invalid
+          // FIREBASE_SERVICE_ACCOUNT) would otherwise fail completely
+          // silently. Log it loudly so it shows up in devtools.
+          const body = await res.text();
+          console.error(`Profile provisioning failed (${res.status}):`, body);
+        }
+      } catch (err) {
+        console.error("Profile provisioning request failed:", err);
       }
     }, 0);
     return () => clearTimeout(t);
