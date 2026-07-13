@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+/* ============================================================
+   With Purpose Academy — design tokens
+   Drawn from the brand logo: charcoal felt, poker-chip red,
+   brass gold, and cream. Dark casino register throughout.
+   ============================================================ */
+
+:root {
+  /* Warm charcoal "felt" scale */
+  --felt-950: oklch(15% 0.012 55);
+  --felt-900: oklch(18% 0.014 55);
+  --felt-800: oklch(22% 0.016 55);
+  --felt-700: oklch(28% 0.018 55);
+  --felt-600: oklch(35% 0.02 55);
+
+  /* Poker-chip red */
+  --chip-700: oklch(42% 0.17 27);
+  --chip-600: oklch(48% 0.19 27);
+  --chip-500: oklch(54% 0.2 28);
+  --chip-400: oklch(62% 0.17 29);
+
+  /* Brass gold */
+  --gold-600: oklch(62% 0.1 80);
+  --gold-500: oklch(70% 0.105 82);
+  --gold-400: oklch(78% 0.09 85);
+  --gold-300: oklch(86% 0.06 88);
+
+  /* Cream text on dark */
+  --cream: oklch(94% 0.018 85);
+  --cream-soft: oklch(78% 0.02 80);
+  --cream-faint: oklch(62% 0.018 75);
+
+  --line: oklch(32% 0.02 60);
+  --line-soft: oklch(26% 0.018 58);
+  --white: oklch(100% 0 0);
+
+  /* Semantic */
+  --success: oklch(64% 0.13 150);
+  --danger: oklch(58% 0.19 25);
+
+  /* Signature gradients */
+  --grad-dark: linear-gradient(165deg, var(--felt-950) 0%, var(--felt-800) 100%);
+  --grad-chip: linear-gradient(135deg, var(--chip-700) 0%, var(--chip-500) 100%);
+  --grad-gold: linear-gradient(110deg, var(--gold-600) 0%, var(--gold-400) 60%, var(--gold-300) 100%);
+
+  /* Font wiring */
+  --font-heading: var(--font-display, ui-serif), Georgia, serif;
+  --font-text: var(--font-body, ui-sans-serif), system-ui, sans-serif;
+
+  /* Motion */
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-md: 0 6px 18px oklch(0% 0 0 / 0.35);
+  --shadow-lg: 0 24px 50px oklch(0% 0 0 / 0.5);
+  --shadow-gold: 0 0 0 1px oklch(70% 0.105 82 / 0.25), 0 10px 30px oklch(0% 0 0 / 0.4);
+}
+
+@theme inline {
+  --color-felt-950: var(--felt-950);
+  --color-felt-900: var(--felt-900);
+  --color-felt-800: var(--felt-800);
+  --color-felt-700: var(--felt-700);
+  --color-felt-600: var(--felt-600);
+
+  --color-chip-700: var(--chip-700);
+  --color-chip-600: var(--chip-600);
+  --color-chip-500: var(--chip-500);
+  --color-chip-400: var(--chip-400);
+
+  --color-gold-600: var(--gold-600);
+  --color-gold-500: var(--gold-500);
+  --color-gold-400: var(--gold-400);
+  --color-gold-300: var(--gold-300);
+
+  --color-cream: var(--cream);
+  --color-cream-soft: var(--cream-soft);
+  --color-cream-faint: var(--cream-faint);
+
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-text);
+  --font-display: var(--font-heading);
+
+  --radius-pill: 999px;
+}
+
+@layer base {
+  * { border-color: var(--line-soft); box-sizing: border-box; }
+
+  html {
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--felt-950);
+    color: var(--cream);
+    font-family: var(--font-text);
+    font-size: 1rem;
+    line-height: 1.65;
+    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: 0.01em;
+    line-height: 1.12;
+    text-wrap: balance;
+    color: inherit;
+    font-weight: 600;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 2.5px solid var(--gold-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--chip-600);
+    color: var(--white);
+  }
+
+  input, textarea, select {
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  .container-wp {
+    width: 100%;
+    max-width: 74rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4.5vw, 2.5rem);
+  }
+
+  .section-pad { padding-block: clamp(4rem, 8vw, 7rem); }
+  .section-pad-tight { padding-block: clamp(2.5rem, 5vw, 4rem); }
+
+  /* Kicker label */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-500);
+  }
+  .kicker::before {
+    content: "";
+    display: block;
+    width: 1.6rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--grad-gold);
+    flex-shrink: 0;
+  }
+
+  /* Fine film grain */
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* Warm gold spotlight for dark sections */
+  .glow-gold {
+    background: radial-gradient(55% 55% at 50% 0%, oklch(70% 0.105 82 / 0.14), transparent 70%);
+  }
+  .glow-red {
+    background: radial-gradient(60% 60% at 50% 100%, oklch(48% 0.19 27 / 0.25), transparent 70%);
+  }
+
+  /* Card surface */
+  .surface {
+    background: var(--felt-900);
+    border: 1px solid var(--line-soft);
+    border-radius: 1.25rem;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-out-expo);
+  }
+  .link-underline:hover { background-size: 100% 1.5px; }
+
+  /* Form fields */
+  .field {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line);
+    background: var(--felt-800);
+    padding: 0.85rem 1rem;
+    color: var(--cream);
+    transition: border-color 0.25s var(--ease-enter), background 0.25s var(--ease-enter);
+  }
+  .field::placeholder { color: var(--cream-faint); }
+  .field:focus { border-color: var(--gold-500); background: var(--felt-700); outline: none; }
+
+  .btn-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background: var(--grad-chip);
+    color: var(--white);
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    transition: filter 0.25s var(--ease-enter), transform 0.15s var(--ease-enter);
+  }
+  .btn-chip:hover { filter: brightness(1.12); }
+  .btn-chip:active { transform: scale(0.98); }
+  .btn-chip:disabled { opacity: 0.5; filter: none; cursor: not-allowed; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    transition: border-color 0.25s var(--ease-enter), background 0.25s var(--ease-enter);
+  }
+  .btn-ghost:hover { border-color: var(--gold-500); background: var(--felt-800); }
+}
+
+/* ---------- Loader ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wp-loader { display: none; }
+}
+
+/* ---------- Marquee ---------- */
+@keyframes wp-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.wp-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: wp-marquee 40s linear infinite;
+}
+.wp-marquee:hover .wp-marquee-track { animation-play-state: paused; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

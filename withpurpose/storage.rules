@@ -1,0 +1,17 @@
+rules_version = '2';
+
+/**
+ * Storage security rules for With Purpose Academy.
+ *
+ * Course PDFs are never read directly by clients — they are served through
+ * the /api/download route, which verifies purchase ownership server-side
+ * with the Admin SDK and issues a short-lived signed URL. Direct client
+ * access is denied entirely so ownership can never be bypassed.
+ */
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
